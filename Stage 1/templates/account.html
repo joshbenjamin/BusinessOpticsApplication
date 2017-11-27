@@ -1,0 +1,38 @@
+<!doctype html>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<title>
+	Welcome to the app
+</title>
+<table>
+
+{% if numEntries > 0 %}
+
+	<tr>
+		<th>
+			Date
+		</th>
+		<th>
+			Balance (in ZAR)
+		</th>
+	</tr>
+
+	{% for entry in entries %}
+
+		<tr>
+			<td>
+				{{ entry.date }}
+			</td>
+			<td>
+				R{{ entry.randAmount }}
+			</td>
+		</tr>
+
+	{% endfor %}
+
+{% else %}
+	<h2>
+		Nobody named '{{name}}' in Database
+	</h2>
+{% endif %}
+
+</table>

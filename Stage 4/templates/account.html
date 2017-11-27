@@ -1,0 +1,186 @@
+<!doctype html>
+<html>
+<title>
+	Welcome to the app
+</title>
+
+<head>
+	<style>
+
+		.topBar {
+			list-style-type: none;
+		    margin: 0;
+		    padding: 0;
+		    overflow: hidden;
+		    background-color: rgb(106,168,79);
+		    width: 100%;
+		}
+
+		.topBar li {
+		    display: block;
+		    color: white;
+		    text-align: center;
+		    padding: 14px 16px;
+		    text-decoration: none;
+		}
+
+		.sideBar {
+		    height: 100%; /* 100% Full-height */
+		    width: 20%; /* 0 width - change this with JavaScript */
+		    position: fixed; /* Stay in place */
+		    z-index: 1; /* Stay on top */
+		    top: 10;
+		    left: 2;
+		    background-color: rgb(153,153,153); /* Black*/
+		    overflow-x: hidden; /* Disable horizontal scroll */
+		    padding-top: 60px; /* Place content 60px from the top */
+		    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+		}
+
+		/* The navigation menu links */
+		.sideBar a {
+		    padding: 8px 8px 8px 32px;
+		    text-decoration: none;
+		    font-size: 22px;
+		    color: black;
+		    display: block;
+		    transition: 0.3s
+		}
+
+		/* When you mouse over the navigation links, change their color */
+		.sideBar a:hover, .offcanvas a:focus{
+		    color: #f1f1f1;
+		}
+
+		.info {
+			padding-left: 25%;
+		}
+
+		.info table {  
+		    color: #333;
+		    font-family: Helvetica, Arial, sans-serif;
+		    width: 80%; 
+		    border-collapse: 
+		    collapse; border-spacing: 0; 
+		}
+
+		.info td, th {  
+		    border: 1px solid transparent; /* No more visible border */
+		    height: 30px; 
+		    transition: all 0.3s;  /* Simple transition for hover effect */
+		    text-align: left;
+		}
+
+		.info th {  
+		    background: #DFDFDF;  /* Darken header a bit */
+		    font-weight: bold;
+		    font-size: 20px;
+		}
+
+		.info td {  
+		    background: #FAFAFA;
+		    text-align: left;
+		}
+
+		/* Cells in even rows (2,4,6...) are one color */        
+		.info tr:nth-child(even) td { background: #F1F1F1; }   
+
+		/* Cells in odd rows (1,3,5...) are another (excludes header cells)  */        
+		.info tr:nth-child(odd) td { background: #FEFEFE; }  
+
+		.info tr td:hover { background: #666; color: #FFF; }
+
+	</style>
+</head>
+
+<body>
+
+	<div class="topBar">
+		<li style="float:left;"><b>Good Bank</b></li>
+
+		<div>
+			<li style="float:right;">Welcome {{name}}</li>
+			<img style="float:right;" src="{{url_for('static', filename='smiley.png')}}" width="40px" height="40px">
+		</div>
+
+	</div>
+
+	<div class="sideBar">
+		<a href="#">Bank Balances</a>
+	    <a href="#">Transfer</a>
+	    <a href="#">Pay</a>
+	</div>
+
+	<div class="info">
+		
+		<h2>Account History</h2>
+
+		<table>
+
+			{% if numEntries > 0 %}
+
+				<tr>
+					<th>
+						Date
+					</th>
+					<th>
+						Balance (in ZAR)
+					</th>
+					<th>
+						Balance (in BTC)
+					</th>
+				</tr>
+
+				{% for entry in entries %}
+
+					<tr>
+						<td>
+							{{ entry.date }}
+						</td>
+						<td>
+							R{{ entry.randAmount }}
+						</td>
+						<td>
+							BTC {{ entry.btcAmount }}
+						</td>
+					</tr>
+
+				{% endfor %}
+
+			{% else %}
+				<h2>
+					Nobody named '{{name}}' in Database
+				</h2>
+			{% endif %}
+
+		</table>
+
+		<br>
+
+  		Enter your current Rand balance:<br>
+  		<form action = "" method = "post">
+	      <p><input type = text name = addElement id = emptyField onkeyup="checkEmpty()"></p>
+	      <p><input type = submit value = Submit id = submitButton disabled></p>
+	   </form>
+
+	</div>
+
+	
+</body>
+
+<script type="text/javascript">
+	function checkEmpty(){
+		if(document.getElementById("emptyField").value > 0){
+			//console.log(this.value.length);
+			document.getElementById("submitButton").disabled = false;
+		}
+		else {
+			document.getElementById("submitButton").disabled = true;
+		}
+	}
+
+	function calculatePrice(rands, btc){
+		var price = rands/btc;
+		result.innerHTML = price;
+	}
+</script>
